@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import java.util.*;
 
  public class MyTest {
      public static void main(String[] args) {
-         double x = -1;
-         double y = -1;
-         double z = 0.0;
-         double[] result = MyMathLib.mecMath(x, y, z);
-         System.out.println(result[0]);
-         System.out.println(result[1]);
-         System.out.println(result[2]);
-         System.out.println(result[3]);
+         for(int i = 0; i < 3; i++) {
+             System.out.println(((i*3)%4));
+         }
      }
  }
