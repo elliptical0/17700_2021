@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.*;
 
+@Deprecated
+@Disabled
 @TeleOp(name="MyFIRSTJavaOpMode", group="default")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
     private DcMotor motor0;
