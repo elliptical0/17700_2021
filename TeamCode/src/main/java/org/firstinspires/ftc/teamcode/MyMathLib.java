@@ -76,21 +76,19 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
 
      /**
       * @author TM
-      * @param pos0 Current position
-      * @param head0 Current heading
-      * @param pos1 Target position
-      * @param head1 Target heading
+      * @param t0 Current transform
+      * @param t1 Target transform
       * @return Wheel powers to drive toward the target position.
       */
-     public static double[] seekLocation(Vector2 pos0, double head0, Vector2 pos1, double head1) {
+     public static double[] seekLocation(Transform t0, Transform t1) {
          Vector2 v = new Vector2(0, 0);
          double r = 0;
-         Vector2 dir = pos1.subtract(pos0);
+         Vector2 dir = t1.pos.subtract(t0.pos);
          if(dir.length() > DEADZONE_POS) {
-             v = dir.rotate(coterminal(head0)).divide(12, 12);
+             v = dir.rotate(coterminal(t0.head)).divide(12, 12);
          }
-         if(Math.abs(head1 - coterminal(head0)) > DEADZONE_ANGLE) {
-             r = absMin(clamp(head1 - coterminal(head0), -1, 1), 0.2);
+         if(Math.abs(t1.head - coterminal(t0.head)) > DEADZONE_ANGLE) {
+             r = absMin(clamp(t1.head - coterminal(t0.head), -1, 1), 0.2);
          }
          return mecMath(v.y, -v.x, r);
      }
@@ -107,13 +105,12 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
     /**
      * Update estimated position using the dead wheel encoders
      * @author TM
-     * @param pos Previous position
-     * @param head Previous heading
+     * @param t Previous transform
      * @param denc Delta of encoders
      * @return Change in heading
      * This is the odometry updating function.
      */
-     public static double updatePosition(Vector2 pos, double head, double[] denc) {
+     public static Transform updatePosition(Transform t, double[] denc) {
          double[] dwheel = new double[3];
          for(int i = 0; i < 3; i++) {
              dwheel[i] = encoderToInch(denc[i]);
@@ -121,9 +118,10 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
          double dt = (dwheel[0] - dwheel[1]) / LATERAL_DISTANCE;
          double df = (dwheel[0] + dwheel[1]) / 2;
          double dr = (dwheel[2]) - dt * REAR_OFFSET;
-         Vector2 dpos = new Vector2(df * Math.cos(head + dt / 2), df * Math.sin(head + dt / 2));
-         dpos.set(dpos.add(dr * -Math.sin(head + dt / 2), dr * Math.cos(head + dt / 2)));
-         pos.set(pos.add(dpos));
-         return dt;
+         Vector2 dpos = new Vector2(df * Math.cos(t.head + dt / 2), df * Math.sin(t.head + dt / 2));
+         dpos.set(dpos.add(dr * -Math.sin(t.head + dt / 2), dr * Math.cos(t.head + dt / 2)));
+         t.pos.set(t.pos.add(dpos));
+         t.head += dt;
+         return t.add(dpos, dt);
      }
  }

@@ -44,10 +44,24 @@ public class Constants {
     public static final double CALIB_DIST = 12;
 
     /**
-     * Shooting position relative to the robot's starting location, in inches.
+     * Shooting transform relative to the robot's starting location, in inches.
      * 3 different shooting positions can be stored and used (change with the BACK button).
      */
-    public static final Vector2[] SHOOTING_POS = {new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0)};
+    public static final Transform[] SHOOTING_T = {
+            new Transform(0, 0, 0),
+            new Transform(0, 0, 0),
+            new Transform(0, 0, 0)
+    };
+
+    /**
+     *
+     */
+    public static final double[] LAUNCH_AIM_POSITIONS = {0, 0.25, 0.5};
+
+    /**
+     *
+     */
+    public static final double[] WOBBLE_AIM_POSITIONS = {0.25, 0.75};
 
     /**
      * Deadzones for when the robot is autonomously seeking a position.
