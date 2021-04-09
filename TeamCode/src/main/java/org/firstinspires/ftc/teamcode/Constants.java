@@ -56,7 +56,7 @@ public class Constants {
     /**
      *
      */
-    public static final double[] LAUNCH_AIM_POSITIONS = {0, -0.1, -0.2};
+    public static final double[] LAUNCH_AIM_POSITIONS = {0, 0.1, 0.2};
 
     /**
      *
