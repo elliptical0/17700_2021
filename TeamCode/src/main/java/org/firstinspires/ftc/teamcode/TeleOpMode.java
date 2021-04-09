@@ -64,14 +64,11 @@ public class TeleOpMode extends BaseOpMode {
         //Launch Controls
         if(gamepad1.dpad_up && paddeb) {
             paddeb = false;
-            launchIndex = Math.min(launchIndex + 1, 2);
-        } else if(gamepad1.dpad_left && paddeb) {
-            paddeb = false;
-            launchIndex = 1;
+            launchIndex = Math.min(launchIndex + 1, LAUNCH_AIM_POSITIONS.length - 1);
         } else if(gamepad1.dpad_down && paddeb) {
             paddeb = false;
             launchIndex = Math.max(launchIndex - 1, 0);
-        } else if(!(gamepad1.dpad_up || gamepad1.dpad_down || gamepad1.dpad_left)) {
+        } else if(!(gamepad1.dpad_up || gamepad1.dpad_down)) {
             paddeb = true;
         }
         updateLaunchAim();
