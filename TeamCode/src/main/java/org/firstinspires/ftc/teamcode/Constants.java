@@ -61,7 +61,7 @@ public class Constants {
     /**
      *
      */
-    public static final double[] WOBBLE_AIM_POSITIONS = {0.25, 0.75};
+    public static final double[] WOBBLE_AIM_POSITIONS = {0.1, 0.5, 1};
 
     /**
      * Deadzones for when the robot is autonomously seeking a position.

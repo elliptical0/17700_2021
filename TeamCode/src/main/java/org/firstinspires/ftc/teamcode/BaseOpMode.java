@@ -27,6 +27,7 @@ public class BaseOpMode extends LinearOpMode {
     DcMotor flywheel;
     CRServo magazine;
     Servo wobbleAim;
+    int wobbleIndex = 0;
     Servo wobbleHand;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     double[] launchAimStart = new double[2];
@@ -73,7 +74,7 @@ public class BaseOpMode extends LinearOpMode {
         if(on) {
             intake.setPower(1);
             magazine.setPower(-1);
-            flywheel.setPower(-1);
+            flywheel.setPower(1);
         } else {
             intake.setPower(0);
             magazine.setPower(0);

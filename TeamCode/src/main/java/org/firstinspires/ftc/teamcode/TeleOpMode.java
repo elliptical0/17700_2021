@@ -35,10 +35,19 @@ public class TeleOpMode extends BaseOpMode {
 
         //Wobble Controls
         if(gamepad1.right_stick_y > 0.2) {
-            wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[1]);
+            if(wobbleAim.getPosition() >= WOBBLE_AIM_POSITIONS[1] - 0.06) {
+                wobbleIndex = 2;
+            } else {
+                wobbleIndex = 1;
+            }
         } else if(gamepad1.right_stick_y < -0.2) {
-            wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[0]);
+            if(wobbleAim.getPosition() > WOBBLE_AIM_POSITIONS[1] + 0.06) {
+                wobbleIndex = 1;
+            } else {
+                wobbleIndex = 0;
+            }
         }
+        wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleIndex]);
 
         if(gamepad1.right_stick_x > 0.2) {
             wobbleHand.setPosition(WOBBLE_AIM_POSITIONS[1]);
@@ -60,7 +69,7 @@ public class TeleOpMode extends BaseOpMode {
 
         //Flywheel Controls
         if(gamepad1.right_bumper) {
-            flywheel.setPower(1);
+            flywheel.setPower(-1);
         }
 
         //Magazine Controls
