@@ -10,6 +10,9 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
  */
 @TeleOp(name="TeleOpMode", group="default")
 public class TeleOpMode extends BaseOpMode {
+    boolean backdeb = true;
+    boolean paddeb = true;
+
     @Override
     public void tick() {
         //Sticks and triggers for movement
@@ -27,8 +30,16 @@ public class TeleOpMode extends BaseOpMode {
             drive[i].setPower(wheelPowers[i] * MOTORCALIB[i]);
         }
 
+        //Intake Controls
+        powerIntake(gamepad1.b);
+
         //Wobble Controls
-        wobbleAim.setPower(gamepad1.right_stick_y);
+        if(gamepad1.right_stick_y > 0.2) {
+            wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[1]);
+        } else if(gamepad1.right_stick_y < -0.2) {
+            wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[0]);
+        }
+
         if(gamepad1.right_stick_x > 0.2) {
             wobbleHand.setPosition(WOBBLE_AIM_POSITIONS[1]);
         } else if(gamepad1.right_stick_x < 0.2) {
@@ -36,20 +47,16 @@ public class TeleOpMode extends BaseOpMode {
         }
 
         //Launch Controls
-        if(gamepad1.dpad_up) {
+        if(gamepad1.dpad_up && paddeb) {
             launchIndex = Math.min(launchIndex + 1, 2);
-        } else if(gamepad1.dpad_down) {
+            paddeb = false;
+        } else if(gamepad1.dpad_down && paddeb) {
             launchIndex = Math.max(launchIndex - 1, 0);
+            paddeb = false;
+        } else {
+            paddeb = true;
         }
         updateLaunchAim();
-
-        //Intake Controls
-        if(gamepad1.y) {
-            powerIntake();
-        } else {
-            flywheel.setPower(gamepad1.right_bumper ? 1 : 0);
-            magazine.setPower(gamepad1.b ? 1 : 0);
-        }
 
         //Flywheel Controls
         if(gamepad1.right_bumper) {

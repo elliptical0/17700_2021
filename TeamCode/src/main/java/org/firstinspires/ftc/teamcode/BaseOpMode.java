@@ -26,7 +26,7 @@ public class BaseOpMode extends LinearOpMode {
     DcMotor intake;
     DcMotor flywheel;
     CRServo magazine;
-    CRServo wobbleAim;
+    Servo wobbleAim;
     Servo wobbleHand;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     double[] launchAimStart = new double[2];
@@ -39,7 +39,6 @@ public class BaseOpMode extends LinearOpMode {
     Transform transform = new Transform(0, 0, 0);
 
     int shoti = 0;
-    boolean backdeb = true;
 
     public void tick() {
         updateTelemetry();
@@ -70,10 +69,16 @@ public class BaseOpMode extends LinearOpMode {
         telemetry.update();
     }
 
-    public void powerIntake() {
-        intake.setPower(1);
-        magazine.setPower(-1);
-        flywheel.setPower(-1);
+    public void powerIntake(boolean on) {
+        if(on) {
+            intake.setPower(1);
+            magazine.setPower(-1);
+            flywheel.setPower(-1);
+        } else {
+            intake.setPower(0);
+            magazine.setPower(0);
+            flywheel.setPower(0);
+        }
     }
 
     public void updateLaunchAim() {
@@ -89,7 +94,7 @@ public class BaseOpMode extends LinearOpMode {
         intake = hardwareMap.get(DcMotor.class, "motor6");
         flywheel = hardwareMap.get(DcMotor.class, "motor5");
         magazine = hardwareMap.get(CRServo.class, "servo5");
-        wobbleAim = hardwareMap.get(CRServo.class, "servo4");
+        wobbleAim = hardwareMap.get(Servo.class, "servo4");
         wobbleHand = hardwareMap.get(Servo.class, "servo3");
         for(i = 0; i < 2; i++) {
             launchAim[i] = hardwareMap.get(Servo.class, "servo" + i);
