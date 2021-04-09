@@ -34,14 +34,14 @@ public class TeleOpMode extends BaseOpMode {
         powerIntake(gamepad1.b);
 
         //Wobble Controls
-        if(gamepad1.right_stick_y > 0.2) {
-            if(wobbleAim.getPosition() >= WOBBLE_AIM_POSITIONS[1] - 0.06) {
+        if(gamepad1.right_stick_y < -0.2) {
+            if(wobbleAim.getPosition() >= WOBBLE_AIM_POSITIONS[1] - 0.01) {
                 wobbleAimIndex = 2;
             } else {
                 wobbleAimIndex = 1;
             }
-        } else if(gamepad1.right_stick_y < -0.2) {
-            if(wobbleAim.getPosition() > WOBBLE_AIM_POSITIONS[1] + 0.06) {
+        } else if(gamepad1.right_stick_y > 0.2) {
+            if(wobbleAim.getPosition() > WOBBLE_AIM_POSITIONS[1] + 0.01) {
                 wobbleAimIndex = 1;
             } else {
                 wobbleAimIndex = 0;

@@ -56,14 +56,14 @@ public class Constants {
     /**
      *
      */
-    public static final double[] LAUNCH_AIM_POSITIONS = {0, -0.5, -1};
+    public static final double[] LAUNCH_AIM_POSITIONS = {0, -0.1, -0.2};
 
     /**
      *
      */
-    public static final double[] WOBBLE_AIM_POSITIONS = {0.25, 0.5, 0.75};
+    public static final double[] WOBBLE_AIM_POSITIONS = {0.5, 0.65, 0.9};
 
-    public static final double[] WOBBLE_HAND_POSITIONS = {0.1, 0.75};
+    public static final double[] WOBBLE_HAND_POSITIONS = {0.15, 0.65};
 
     /**
      * Deadzones for when the robot is autonomously seeking a position.
