@@ -83,6 +83,14 @@ public class BaseOpMode extends LinearOpMode {
         }
     }
 
+    public void updateWobbleAim() {
+        wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleAimIndex]);
+    }
+
+    public void updateWobbleHand() {
+        wobbleHand.setPosition(WOBBLE_HAND_POSITIONS[wobbleHandIndex]);
+    }
+
     public void updateLaunchAim() {
         for(i = 0; i < 2; i++) {
             launchAim[i].setPosition(LAUNCH_AIM_POSITIONS[launchIndex]);

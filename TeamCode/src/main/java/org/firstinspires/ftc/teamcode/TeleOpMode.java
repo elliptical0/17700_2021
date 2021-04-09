@@ -10,9 +10,9 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
  */
 @TeleOp(name="TeleOpMode", group="default")
 public class TeleOpMode extends BaseOpMode {
-    boolean backdeb = true;
-    boolean rstickdeb = true;
-    boolean paddeb = true;
+    private boolean backdeb = true;
+    private boolean rstickdeb = true;
+    private boolean paddeb = true;
 
     @Override
     public void tick() {
@@ -52,14 +52,14 @@ public class TeleOpMode extends BaseOpMode {
         } else if(gamepad1.right_stick_y < 0.2 && gamepad1.right_stick_y > -0.2) {
             rstickdeb = true;
         }
-        wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleAimIndex]);
+        updateWobbleAim();
 
         if(gamepad1.right_stick_x > 0.2) {
             wobbleHandIndex = 1;
         } else if(gamepad1.right_stick_x < -0.2) {
             wobbleHandIndex = 0;
         }
-        wobbleHand.setPosition(WOBBLE_HAND_POSITIONS[wobbleHandIndex]);
+        updateWobbleHand();
 
         //Launch Controls
         if(gamepad1.dpad_up && paddeb) {
@@ -68,7 +68,7 @@ public class TeleOpMode extends BaseOpMode {
         } else if(gamepad1.dpad_down && paddeb) {
             launchIndex = Math.max(launchIndex - 1, 0);
             paddeb = false;
-        } else if(!gamepad1.dpad_up && !gamepad1.dpad_down) {
+        } else if(!(gamepad1.dpad_up || gamepad1.dpad_down)) {
             paddeb = true;
         }
         updateLaunchAim();
