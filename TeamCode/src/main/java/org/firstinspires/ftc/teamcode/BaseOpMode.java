@@ -27,8 +27,9 @@ public class BaseOpMode extends LinearOpMode {
     DcMotor flywheel;
     CRServo magazine;
     Servo wobbleAim;
-    int wobbleIndex = 0;
+    int wobbleAimIndex = 0;
     Servo wobbleHand;
+    int wobbleHandIndex = 0;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     double[] launchAimStart = new double[2];
     int launchIndex = 0;
@@ -100,7 +101,6 @@ public class BaseOpMode extends LinearOpMode {
         for(i = 0; i < 2; i++) {
             launchAim[i] = hardwareMap.get(Servo.class, "servo" + i);
             launchAim[i].setDirection(i == 0 ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
-            launchAimStart[i] = launchAim[i].getPosition();
         }
 
         telemetry.addData("Status", "Initialized");
@@ -108,6 +108,9 @@ public class BaseOpMode extends LinearOpMode {
 
         waitForStart();
 
+        for(i = 0; i < 2; i++) {
+            launchAimStart[i] = launchAim[i].getPosition();
+        }
         while(opModeIsActive()) {
             updateTime();
             updateOdometry();

@@ -36,24 +36,25 @@ public class TeleOpMode extends BaseOpMode {
         //Wobble Controls
         if(gamepad1.right_stick_y > 0.2) {
             if(wobbleAim.getPosition() >= WOBBLE_AIM_POSITIONS[1] - 0.06) {
-                wobbleIndex = 2;
+                wobbleAimIndex = 2;
             } else {
-                wobbleIndex = 1;
+                wobbleAimIndex = 1;
             }
         } else if(gamepad1.right_stick_y < -0.2) {
             if(wobbleAim.getPosition() > WOBBLE_AIM_POSITIONS[1] + 0.06) {
-                wobbleIndex = 1;
+                wobbleAimIndex = 1;
             } else {
-                wobbleIndex = 0;
+                wobbleAimIndex = 0;
             }
         }
-        wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleIndex]);
+        wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleAimIndex]);
 
         if(gamepad1.right_stick_x > 0.2) {
-            wobbleHand.setPosition(0.1);
-        } else if(gamepad1.right_stick_x < 0.2) {
-            wobbleHand.setPosition(0.75);
+            wobbleHandIndex = 1;
+        } else if(gamepad1.right_stick_x < -0.2) {
+            wobbleHandIndex = 0;
         }
+        wobbleHand.setPosition(WOBBLE_HAND_POSITIONS[wobbleHandIndex]);
 
         //Launch Controls
         if(gamepad1.dpad_up && paddeb) {
