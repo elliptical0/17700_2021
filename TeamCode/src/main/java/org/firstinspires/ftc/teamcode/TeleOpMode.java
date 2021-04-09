@@ -50,9 +50,9 @@ public class TeleOpMode extends BaseOpMode {
         wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleIndex]);
 
         if(gamepad1.right_stick_x > 0.2) {
-            wobbleHand.setPosition(WOBBLE_AIM_POSITIONS[1]);
+            wobbleHand.setPosition(0.1);
         } else if(gamepad1.right_stick_x < 0.2) {
-            wobbleHand.setPosition(WOBBLE_AIM_POSITIONS[0]);
+            wobbleHand.setPosition(0.75);
         }
 
         //Launch Controls
