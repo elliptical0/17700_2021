@@ -31,7 +31,7 @@ public class BaseOpMode extends LinearOpMode {
     Servo wobbleHand;
     int wobbleHandIndex = 0;
     Servo[] launchAim = new Servo[2]; //Must be in unison
-    double[] launchAimStart = new double[2];
+    //double[] launchAimStart = new double[2];
     int launchIndex = 0;
 
     double[] wheelPowers;
@@ -85,7 +85,7 @@ public class BaseOpMode extends LinearOpMode {
 
     public void updateLaunchAim() {
         for(i = 0; i < 2; i++) {
-            launchAim[i].setPosition(launchAimStart[i] + LAUNCH_AIM_POSITIONS[launchIndex]);
+            launchAim[i].setPosition(LAUNCH_AIM_POSITIONS[launchIndex]);
         }
     }
 
@@ -108,9 +108,6 @@ public class BaseOpMode extends LinearOpMode {
 
         waitForStart();
 
-        for(i = 0; i < 2; i++) {
-            launchAimStart[i] = launchAim[i].getController().getServoPosition(0);
-        }
         while(opModeIsActive()) {
             updateTime();
             updateOdometry();
