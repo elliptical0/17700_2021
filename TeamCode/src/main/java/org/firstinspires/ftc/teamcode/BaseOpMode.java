@@ -109,7 +109,7 @@ public class BaseOpMode extends LinearOpMode {
         waitForStart();
 
         for(i = 0; i < 2; i++) {
-            launchAimStart[i] = launchAim[i].getPosition();
+            launchAimStart[i] = launchAim[i].getController().getServoPosition(0);
         }
         while(opModeIsActive()) {
             updateTime();

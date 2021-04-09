@@ -11,6 +11,7 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
 @TeleOp(name="TeleOpMode", group="default")
 public class TeleOpMode extends BaseOpMode {
     boolean backdeb = true;
+    boolean rstickdeb = true;
     boolean paddeb = true;
 
     @Override
@@ -34,18 +35,22 @@ public class TeleOpMode extends BaseOpMode {
         powerIntake(gamepad1.b);
 
         //Wobble Controls
-        if(gamepad1.right_stick_y < -0.2) {
+        if(gamepad1.right_stick_y < -0.2 && rstickdeb) {
             if(wobbleAim.getPosition() == WOBBLE_AIM_POSITIONS[1]) {
                 wobbleAimIndex = 2;
             } else {
                 wobbleAimIndex = 1;
             }
-        } else if(gamepad1.right_stick_y > 0.2) {
+            rstickdeb = false;
+        } else if(gamepad1.right_stick_y > 0.2 && rstickdeb) {
             if(wobbleAim.getPosition() == WOBBLE_AIM_POSITIONS[2]) {
                 wobbleAimIndex = 1;
             } else {
                 wobbleAimIndex = 0;
             }
+            rstickdeb = false;
+        } else if(gamepad1.right_stick_y < 0.2 && gamepad1.right_stick_y > -0.2) {
+            rstickdeb = true;
         }
         wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleAimIndex]);
 
@@ -90,8 +95,8 @@ public class TeleOpMode extends BaseOpMode {
         }
 
         //updateTelemetry();
-        telemetry.addData("wobbleAimPosition:", wobbleAim.getPosition());
-        telemetry.addData("launchAimPosition:", launchAim[1].getPosition());
+        telemetry.addData("wobbleAimPosition:", wobbleAim.getController().getServoPosition(0));
+        telemetry.addData("launchAimPosition:", launchAim[1].getController().getServoPosition(0));
         telemetry.update();
     }
 }
