@@ -63,12 +63,15 @@ public class TeleOpMode extends BaseOpMode {
 
         //Launch Controls
         if(gamepad1.dpad_up && paddeb) {
+            paddeb = false;
             launchIndex = Math.min(launchIndex + 1, 2);
+        } else if(gamepad1.dpad_left && paddeb) {
             paddeb = false;
+            launchIndex = 1;
         } else if(gamepad1.dpad_down && paddeb) {
-            launchIndex = Math.max(launchIndex - 1, 0);
             paddeb = false;
-        } else if(!(gamepad1.dpad_up || gamepad1.dpad_down)) {
+            launchIndex = Math.max(launchIndex - 1, 0);
+        } else if(!(gamepad1.dpad_up || gamepad1.dpad_down || gamepad1.dpad_left)) {
             paddeb = true;
         }
         updateLaunchAim();
@@ -97,6 +100,7 @@ public class TeleOpMode extends BaseOpMode {
         //updateTelemetry();
         telemetry.addData("wobbleAimPosition:", wobbleAim.getController().getServoPosition(0));
         telemetry.addData("launchAimPosition:", launchAim[1].getController().getServoPosition(0));
+        telemetry.addData("launchIndex:", launchIndex);
         telemetry.update();
     }
 }

@@ -31,7 +31,6 @@ public class BaseOpMode extends LinearOpMode {
     Servo wobbleHand;
     int wobbleHandIndex = 0;
     Servo[] launchAim = new Servo[2]; //Must be in unison
-    //double[] launchAimStart = new double[2];
     int launchIndex = 0;
 
     double[] wheelPowers;
