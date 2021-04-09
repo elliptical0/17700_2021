@@ -92,5 +92,6 @@ public class TeleOpMode extends BaseOpMode {
         //updateTelemetry();
         telemetry.addData("wobbleAimPosition:", wobbleAim.getPosition());
         telemetry.addData("launchAimPosition:", launchAim[1].getPosition());
+        telemetry.update();
     }
 }
