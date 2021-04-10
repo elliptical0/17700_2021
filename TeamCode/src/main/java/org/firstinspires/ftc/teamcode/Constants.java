@@ -27,7 +27,7 @@ public class Constants {
     /**
      * Either 1 or -1, used to reverse certain encoders.
      */
-    public static final int[] ENCODER_DIRECTIONS = {1, 1, 1};
+    public static final int[] ENCODER_DIRECTIONS = {1, 1, -1};
 
     /**
      * Distance between the two lateral dead wheels.

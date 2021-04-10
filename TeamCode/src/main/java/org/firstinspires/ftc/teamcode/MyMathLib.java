@@ -90,7 +90,7 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
          if(Math.abs(t1.head - coterminal(t0.head)) > DEADZONE_ANGLE) {
              r = absMin(clamp(t1.head - coterminal(t0.head), -1, 1), 0.2);
          }
-         return mecMath(v.y, -v.x, r);
+         return mecMath(clamp(v.y, -1, 1), clamp(v.x, -1, 1), r); //For the old bot, v.x is negative.
      }
 
      /**

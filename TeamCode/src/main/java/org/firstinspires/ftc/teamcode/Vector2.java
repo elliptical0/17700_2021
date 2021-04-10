@@ -75,7 +75,8 @@ public class Vector2 {
      * @param theta in radians.
      */
     public Vector2 rotate(double theta) {
-        return new Vector2(Math.cos(theta) * x - Math.sin(theta) * y, Math.sin(theta) * x + Math.cos(theta) * y);
+        return new Vector2(Math.cos(theta) * x - Math.sin(theta) * y,
+                Math.sin(theta) * x + Math.cos(theta) * y);
     }
     /**
      * Rotate clockwise.
