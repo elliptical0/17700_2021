@@ -15,8 +15,9 @@ public class Constants {
 
     /**
      * Deadwheel radius.
+     * old: 0.995370749373427
      */
-    public static final double DEADWHEEL_RADIUS = 0.9899713817476206; //old: 0.995370749373427
+    public static final double DEADWHEEL_RADIUS = 0.9899713817476206;
 
     /**
      * Encoder ticks per revolution.
@@ -24,14 +25,21 @@ public class Constants {
     public static final double TICKS_PER_REV = 8192;
 
     /**
-     * Distance between the two lateral dead wheels.
+     * Either 1 or -1, used to reverse certain encoders.
      */
-    public static final double LATERAL_DISTANCE = 11.440378084618675; //old: 11.440378084618675
+    public static final int[] ENCODER_DIRECTIONS = {1, 1, 1};
+
+    /**
+     * Distance between the two lateral dead wheels.
+     * old: 11.440378084618675
+     */
+    public static final double LATERAL_DISTANCE = 15.054853749727858;
 
     /**
      * Distance between the rear dead wheel and the center.
+     * old: 8.9560151267944225
      */
-    public static final double REAR_OFFSET = 8.9560151267944225; //old: 8.9560151267944225
+    public static final double REAR_OFFSET = 2.3276239445354205;
 
     /**
      * Number of spins during LATERAL_DISTANCE and REAR_OFFSET calibration. Higher = more accurate.

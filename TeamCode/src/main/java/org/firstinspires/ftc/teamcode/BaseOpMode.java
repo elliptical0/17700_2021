@@ -52,7 +52,7 @@ public class BaseOpMode extends LinearOpMode {
 
     public void updateOdometry() {
         for(i = 0; i < 3; i ++) {
-            d = -drive[i].getCurrentPosition(); //All encoders are reversed.
+            d = drive[i].getCurrentPosition() * ENCODER_DIRECTIONS[i];
             encoderDelta[i] = d - encoderPos[i];
             encoderPos[i] = d;
         }
