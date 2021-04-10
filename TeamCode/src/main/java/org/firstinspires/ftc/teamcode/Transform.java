@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 public class Transform {
-    Vector2 pos;
-    double head;
+    public Vector2 pos;
+    public double head;
 
     public Transform(Vector2 pos, double head) {
         this.pos = pos;
