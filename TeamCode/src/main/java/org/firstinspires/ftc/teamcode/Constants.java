@@ -41,7 +41,7 @@ public class Constants {
     /**
      * Number of inches traveled during DEADWHEEL_RADIUS calculation. Higher = more accurate.
      */
-    public static final double CALIB_DIST = 12;
+    public static final double CALIB_DIST = 48;
 
     /**
      * Shooting transform relative to the robot's starting location, in inches.
