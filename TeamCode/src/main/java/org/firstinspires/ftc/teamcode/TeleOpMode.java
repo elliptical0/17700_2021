@@ -94,10 +94,6 @@ public class TeleOpMode extends BaseOpMode {
             backdeb = true;
         }
 
-        //updateTelemetry();
-        telemetry.addData("wobbleAimPosition:", wobbleAim.getController().getServoPosition(0));
-        telemetry.addData("launchAimPosition:", launchAim[1].getController().getServoPosition(0));
-        telemetry.addData("launchIndex:", launchIndex);
-        telemetry.update();
+        updateTelemetry();
     }
 }
