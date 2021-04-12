@@ -36,6 +36,7 @@ public class BaseOpMode extends LinearOpMode {
     double[] wheelPowers;
 
     double[] encoderPos = new double[3];
+    double[] encoderResetPos = new double[3];
     double[] encoderDelta = new double[3];
     Transform transform = new Transform(0, 0, 0);
 
@@ -51,12 +52,12 @@ public class BaseOpMode extends LinearOpMode {
     }
 
     public void updateOdometry() {
-        for(i = 0; i < 3; i ++) {
-            d = drive[i].getCurrentPosition() * ENCODER_DIRECTIONS[i];
+        for(i = 0; i < 3; i++) {
+            d = (drive[i].getCurrentPosition() - encoderResetPos[i]) * ENCODER_DIRECTIONS[i];
             encoderDelta[i] = d - encoderPos[i];
             encoderPos[i] = d;
         }
-        updatePosition(transform, encoderDelta);
+        transform = updatePosition(transform, encoderDelta, encoderPos);
     }
 
     public void updateTelemetry() {
@@ -96,18 +97,27 @@ public class BaseOpMode extends LinearOpMode {
         }
     }
 
+    public void resetPosition() {
+        for(i = 0; i < 3; i++) {
+            encoderResetPos[i] = (drive[i].getCurrentPosition());
+        }
+        transform.set(0, 0, 0);
+    }
+
     public void runOpMode() {
         for (i = 0; i < 4; i++) {
             drive[i] = hardwareMap.get(DcMotor.class, "motor" + i);
         }
-        intake = hardwareMap.get(DcMotor.class, "motor6");
-        flywheel = hardwareMap.get(DcMotor.class, "motor5");
-        magazine = hardwareMap.get(CRServo.class, "servo5");
-        wobbleAim = hardwareMap.get(Servo.class, "servo4");
-        wobbleHand = hardwareMap.get(Servo.class, "servo3");
-        for(i = 0; i < 2; i++) {
-            launchAim[i] = hardwareMap.get(Servo.class, "servo" + i);
-            launchAim[i].setDirection(i == 0 ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
+        if(SERVOS_ACTIVE) {
+            intake = hardwareMap.get(DcMotor.class, "motor6");
+            flywheel = hardwareMap.get(DcMotor.class, "motor5");
+            magazine = hardwareMap.get(CRServo.class, "servo5");
+            wobbleAim = hardwareMap.get(Servo.class, "servo4");
+            wobbleHand = hardwareMap.get(Servo.class, "servo3");
+            for (i = 0; i < 2; i++) {
+                launchAim[i] = hardwareMap.get(Servo.class, "servo" + i);
+                launchAim[i].setDirection(i == 0 ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
+            }
         }
 
         telemetry.addData("Status", "Initialized");

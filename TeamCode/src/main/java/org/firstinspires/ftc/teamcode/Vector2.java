@@ -58,6 +58,9 @@ public class Vector2 {
     public Vector2 multiply(double x_, double y_) {
         return new Vector2(x * x_, y * y_);
     }
+    public Vector2 multiply(double s) {
+        return new Vector2(x * s, y * s);
+    }
 
     public Vector2 divide(Vector2 vector) {
         return new Vector2(x / vector.x, y / vector.y);

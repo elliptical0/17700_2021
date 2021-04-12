@@ -16,6 +16,7 @@ public class Constants {
     /**
      * Deadwheel radius.
      * old: 0.995370749373427
+     * new: 0.9899713817476206
      */
     public static final double DEADWHEEL_RADIUS = 0.9899713817476206;
 
@@ -32,12 +33,14 @@ public class Constants {
     /**
      * Distance between the two lateral dead wheels.
      * old: 11.440378084618675
+     * new: 15.054853749727858
      */
     public static final double LATERAL_DISTANCE = 15.054853749727858;
 
     /**
      * Distance between the rear dead wheel and the center.
      * old: 8.9560151267944225
+     * new: 2.3276239445354205
      */
     public static final double REAR_OFFSET = 2.3276239445354205;
 
@@ -78,4 +81,6 @@ public class Constants {
      */
     public static final double DEADZONE_POS = 0.75;
     public static final double DEADZONE_ANGLE = Math.toRadians(5);
+
+    public static final boolean SERVOS_ACTIVE = false;
 }

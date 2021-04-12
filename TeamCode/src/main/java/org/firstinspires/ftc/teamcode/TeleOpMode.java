@@ -31,6 +31,23 @@ public class TeleOpMode extends BaseOpMode {
             drive[i].setPower(wheelPowers[i] * MOTORCALIB[i]);
         }
 
+        //Start: Reset position. Back: Change goal position.
+        if(gamepad1.start) {
+            resetPosition();
+        }
+        if(gamepad1.back && backdeb) {
+            backdeb = false;
+            shoti = (shoti + 1) % 3;
+        } else if(!gamepad1.back) {
+            backdeb = true;
+        }
+
+        //Ends the loop here if the servos aren't active.
+        if(!SERVOS_ACTIVE) {
+            updateTelemetry();
+            return;
+        }
+
         //Intake Controls
         powerIntake(gamepad1.b);
 
@@ -81,17 +98,6 @@ public class TeleOpMode extends BaseOpMode {
         //Magazine Controls
         if(gamepad1.a) {
             magazine.setPower(1);
-        }
-
-        //Start: Reset position. Back: Change goal position.
-        if(gamepad1.start) {
-            transform.set(0, 0, 0);
-        }
-        if(gamepad1.back && backdeb) {
-            backdeb = false;
-            shoti = (shoti + 1) % 3;
-        } else if(!gamepad1.back) {
-            backdeb = true;
         }
 
         updateTelemetry();
