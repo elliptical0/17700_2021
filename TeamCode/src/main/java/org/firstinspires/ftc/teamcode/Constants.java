@@ -82,5 +82,5 @@ public class Constants {
     public static final double DEADZONE_POS = 0.75;
     public static final double DEADZONE_ANGLE = Math.toRadians(5);
 
-    public static final boolean SERVOS_ACTIVE = false;
+    public static final boolean SERVOS_ACTIVE = true;
 }
