@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import static org.firstinspires.ftc.teamcode.MyMathLib.*;
 
+@Autonomous(name="AutoOpMode", group="default")
 public class AutoOpMode extends BaseOpMode {
     public int stage = 0;
 
