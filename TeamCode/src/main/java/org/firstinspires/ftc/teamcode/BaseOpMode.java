@@ -104,7 +104,7 @@ public class BaseOpMode extends LinearOpMode {
         transform.set(0, 0, 0);
     }
 
-    public void runOpMode() {
+    public void initialize() {
         for (i = 0; i < 4; i++) {
             drive[i] = hardwareMap.get(DcMotor.class, "motor" + i);
         }
@@ -122,6 +122,11 @@ public class BaseOpMode extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        initialize();
 
         waitForStart();
 
