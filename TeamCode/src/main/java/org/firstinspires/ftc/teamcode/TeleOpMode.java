@@ -18,7 +18,7 @@ public class TeleOpMode extends BaseOpMode {
     public void tick() {
         //Sticks and triggers for movement
         if(gamepad1.left_bumper) {
-            wheelPowers = seekLocation(transform, SHOOTING_T[shoti]);
+            wheelPowers = seekLocation(transform, SHOOTING_T);
         } else {
             wheelPowers = mecMath(gamepad1.left_stick_x, gamepad1.left_stick_y, (gamepad1.left_trigger - gamepad1.right_trigger));
             if (gamepad1.left_stick_button) {
@@ -52,28 +52,28 @@ public class TeleOpMode extends BaseOpMode {
         powerIntake(gamepad1.b);
 
         //Wobble Controls
-        if(gamepad1.right_stick_y < -0.2 && rstickdeb) {
+        if(gamepad1.right_stick_y < -0.3 && rstickdeb) {
             if(wobbleAim.getPosition() == WOBBLE_AIM_POSITIONS[1]) {
                 wobbleAimIndex = 2;
             } else {
                 wobbleAimIndex = 1;
             }
             rstickdeb = false;
-        } else if(gamepad1.right_stick_y > 0.2 && rstickdeb) {
+        } else if(gamepad1.right_stick_y > 0.3 && rstickdeb) {
             if(wobbleAim.getPosition() == WOBBLE_AIM_POSITIONS[2]) {
                 wobbleAimIndex = 1;
             } else {
                 wobbleAimIndex = 0;
             }
             rstickdeb = false;
-        } else if(gamepad1.right_stick_y < 0.2 && gamepad1.right_stick_y > -0.2) {
+        } else if(gamepad1.right_stick_y < 0.3 && gamepad1.right_stick_y > -0.3) {
             rstickdeb = true;
         }
         updateWobbleAim();
 
-        if(gamepad1.right_stick_x > 0.2) {
+        if(gamepad1.right_stick_x > 0.3) {
             wobbleHandIndex = 1;
-        } else if(gamepad1.right_stick_x < -0.2) {
+        } else if(gamepad1.right_stick_x < -0.3) {
             wobbleHandIndex = 0;
         }
         updateWobbleHand();

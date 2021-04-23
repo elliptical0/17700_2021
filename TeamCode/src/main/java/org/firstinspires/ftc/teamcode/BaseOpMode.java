@@ -105,6 +105,7 @@ public class BaseOpMode extends LinearOpMode {
     }
 
     public void initialize() {
+        transform = SharedVariables.transform;
         for (i = 0; i < 4; i++) {
             drive[i] = hardwareMap.get(DcMotor.class, "motor" + i);
         }

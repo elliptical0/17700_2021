@@ -55,14 +55,14 @@ public class Constants {
     public static final double CALIB_DIST = 48;
 
     /**
-     * Shooting transform relative to the robot's starting location, in inches.
-     * 3 different shooting positions can be stored and used (change with the BACK button).
+     * Shooting transform in inches.
      */
-    public static final Transform[] SHOOTING_T = {
-            new Transform(0, 0, 0),
-            new Transform(0, 0, 0),
-            new Transform(0, 0, 0)
-    };
+    public static final Transform SHOOTING_T = new Transform(0, 0, 0);
+
+    /**
+     * Starting transform of the robot in inches.
+     */
+    public static final Transform[] STARTING_T = {new Transform(9, 9, 0)};
 
     /**
      *
