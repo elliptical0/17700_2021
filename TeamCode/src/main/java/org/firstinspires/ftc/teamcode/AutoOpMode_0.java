@@ -34,7 +34,8 @@ public class AutoOpMode_0 extends BaseOpMode {
     }
 
     public void moveState(int i, int nextState) {
-        if(seekLocation(transform, transforms[i]) == D) {
+        wheelPowers = seekLocation(transform, transforms[i]);
+        if(wheelPowers == D) {
             changeState(nextState);
         }
     }
@@ -52,6 +53,7 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     @Override
     public void tick() {
+        wheelPowers = D;
         switch(state) {
             case 0:
                 moveState(0);
@@ -110,7 +112,7 @@ public class AutoOpMode_0 extends BaseOpMode {
                 stop();
                 break;
         }
-
+        updateMotors();
         updateTelemetry();
     }
 }

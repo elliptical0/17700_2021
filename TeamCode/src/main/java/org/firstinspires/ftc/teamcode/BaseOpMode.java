@@ -83,6 +83,12 @@ public class BaseOpMode extends LinearOpMode {
         }
     }
 
+    public void updateMotors() {
+        for (i = 0; i < 4; i++) {
+            drive[i].setPower(wheelPowers[i] * MOTORCALIB[i]);
+        }
+    }
+
     public void updateWobbleAim() {
         wobbleAim.setPosition(WOBBLE_AIM_POSITIONS[wobbleAimIndex]);
     }
