@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import static org.firstinspires.ftc.teamcode.MyMathLib.*;
-import static org.firstinspires.ftc.teamcode.Constants.*;
 
 /**
  * @author TM
@@ -12,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
 public class AutoOpMode_0 extends BaseOpMode {
     public int state = 0;
 
-    public final double[] d = new double[3];
+    public final double[] D = new double[4];
 
     public final int STARTING_T_I = 0;
 
@@ -35,7 +34,7 @@ public class AutoOpMode_0 extends BaseOpMode {
     }
 
     public void moveState(int i, int nextState) {
-        if(seekLocation(transform, transforms[i]) == d) {
+        if(seekLocation(transform, transforms[i]) == D) {
             changeState(nextState);
         }
     }
@@ -82,6 +81,7 @@ public class AutoOpMode_0 extends BaseOpMode {
                     switch(starterStackPosition) {
                         case 0:
                             changeState(6);
+                            break;
                     }
                 }
                 break;
@@ -105,6 +105,7 @@ public class AutoOpMode_0 extends BaseOpMode {
                 break;
             case 12:
                 moveState(4, 99);
+                break;
             case 99:
                 stop();
                 break;
