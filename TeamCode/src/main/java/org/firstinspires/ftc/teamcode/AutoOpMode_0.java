@@ -11,12 +11,13 @@ import static org.firstinspires.ftc.teamcode.MyMathLib.*;
 public class AutoOpMode_0 extends BaseOpMode {
     public int state = 0;
 
-    public final double[] D = new double[4];
+    public final double[] D = {0, 0, 0, 0};
 
     public final int STARTING_T_I = 0;
 
+    private VisionThread visionThread = new VisionThread();
+
     double stateStartTime;
-    int starterStackPosition;
 
     public void changeState(int i) {
         state = i;
@@ -26,8 +27,11 @@ public class AutoOpMode_0 extends BaseOpMode {
     public final Transform[] transforms = {new Transform(12, 12, 0),
             new Transform(72, 12, Math.toRadians(45)),
             new Transform(97.5, 28, Math.toRadians(0)),
+            new Transform(72, 12, Math.toRadians(180)),
+            new Transform(48, 36, Math.toRadians(180)),
             new Transform(24, 12, Math.toRadians(180)),
-            new Transform(60, 12, Math.toRadians(180))};
+            new Transform(60, 12, Math.toRadians(180))
+    };
 
     public void moveState(int i) {
         moveState(i, state + 1);
@@ -35,13 +39,17 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     public void moveState(int i, int nextState) {
         wheelPowers = seekLocation(transform, transforms[i]);
-        if(wheelPowers == D) {
+        if(wheelPowers.equals(D)) {
             changeState(nextState);
         }
     }
 
     public void examineStarterStack() {
-        starterStackPosition = 0;
+        if(visionThread.stackSize == 4) {
+            visionThread.interrupt();
+        } else if(visionThread.stackSize == 1) {
+            visionThread.interrupt();
+        }
         changeState(state + 1);
     }
 
@@ -62,34 +70,50 @@ public class AutoOpMode_0 extends BaseOpMode {
                 moveState(1);
                 break;
             case 2:
-                examineStarterStack();
-                break;
+                visionThread = new VisionThread();
+                visionThread.run();
+                changeState(3);
             case 3:
-                moveState(2);
+                examineStarterStack();
+                if(currentTime - stateStartTime > 2 || visionThread.stackSize != 0) {
+                    changeState(4);
+                }
                 break;
             case 4:
+                moveState(2);
+                break;
+            case 5:
                 wobbleAimIndex = 2;
                 wobbleHandIndex = 1;
                 if(currentTime - stateStartTime > 2) {
-                    changeState(5);
+                    changeState(6);
                 }
                 break;
-            case 5:
+            case 6:
                 wobbleHandIndex = 0;
                 if(currentTime - stateStartTime > 0.25) {
                     wobbleAimIndex = 1;
                 }
                 if(currentTime - stateStartTime > 1.25) {
-                    switch(starterStackPosition) {
+                    switch(visionThread.stackSize) {
                         case 0:
-                            changeState(6);
+                            changeState(7);
+                        case 1:
+                            changeState(8);
+                            break;
+                        case 4:
+                            changeState(9);
                             break;
                     }
                 }
                 break;
-            case 6:
+            case 7:
                 moveState(3, 10);
                 break;
+            case 8:
+                moveState(4, 10);
+            case 9:
+                moveState(5, 10);
             case 10:
                 wobbleAimIndex = 2;
                 if(currentTime - stateStartTime > 1) {
@@ -106,13 +130,14 @@ public class AutoOpMode_0 extends BaseOpMode {
                 }
                 break;
             case 12:
-                moveState(4, 99);
+                moveState(6, 99);
                 break;
             case 99:
                 stop();
                 break;
         }
         updateMotors();
+        telemetry.addData("State:", state);
         updateTelemetry();
     }
 }

@@ -6,6 +6,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+
+import java.util.ArrayList;
+
 import static org.firstinspires.ftc.teamcode.MyMathLib.*;
 import static org.firstinspires.ftc.teamcode.Constants.*;
 
@@ -32,6 +40,8 @@ public class BaseOpMode extends LinearOpMode {
     int wobbleHandIndex = 0;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     int launchIndex = 0;
+    OpenCvCamera cam;
+
 
     double[] wheelPowers;
 
@@ -108,6 +118,36 @@ public class BaseOpMode extends LinearOpMode {
             encoderResetPos[i] = (drive[i].getCurrentPosition());
         }
         transform.set(0, 0, 0);
+    }
+
+    class VisionThread extends Thread {
+        int stackSize = 0;
+
+        public VisionThread() {
+            this.setName("VisionThread");
+        }
+
+        public void run() {
+            try {
+                ImgFilter filter = new ImgFilter();
+                ArrayList<MatOfPoint> rings;
+                cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
+                cam.setPipeline(filter);
+                while (!isInterrupted()) {
+                    rings = filter.filterContoursOutput();
+                    if(!rings.isEmpty()) {
+                        double ratio = (double) rings.get(0).height() / rings.get(0).width();
+                        if(ratio > 3.1) {
+                            stackSize = 4;
+                        } else if(ratio > 2) {
+                            stackSize = 1;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("(VisionThread) " + e.toString());
+            }
+        }
     }
 
     public void initialize() {
