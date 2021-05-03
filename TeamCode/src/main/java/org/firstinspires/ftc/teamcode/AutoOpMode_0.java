@@ -38,6 +38,9 @@ public class AutoOpMode_0 extends BaseOpMode {
     }
 
     public void moveState(int i, int nextState) {
+        changeState(nextState);
+        return;
+        /*
         wheelPowers = seekLocation(transform, transforms[i]);
         b = true;
         for(double p : wheelPowers) {
@@ -48,6 +51,7 @@ public class AutoOpMode_0 extends BaseOpMode {
         if(b) {
             changeState(nextState);
         }
+         */
     }
 
     @Override

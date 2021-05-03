@@ -89,5 +89,5 @@ public class Constants {
 
     public static final double DEADZONE_SERVO = 0.05;
 
-    public static final boolean SERVOS_ACTIVE = true;
+    public static final boolean SERVOS_ACTIVE = false;
 }
