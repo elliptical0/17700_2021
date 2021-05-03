@@ -72,6 +72,11 @@ public class Constants {
     /**
      *
      */
+    public static final double[] COUNTERWEIGHT_POSITIONS = {0.2, 0.4};
+
+    /**
+     *
+     */
     public static final double[] WOBBLE_AIM_POSITIONS = {0.5, 0.65, 0.8};
 
     public static final double[] WOBBLE_HAND_POSITIONS = {0.15, 0.7};
@@ -79,8 +84,8 @@ public class Constants {
     /**
      * Deadzones for when the robot is autonomously seeking a position.
      */
-    public static final double DEADZONE_POS = 0.75;
-    public static final double DEADZONE_ANGLE = Math.toRadians(5);
+    public static final double DEADZONE_POS = 1.5;
+    public static final double DEADZONE_ANGLE = Math.toRadians(8);
 
     public static final boolean SERVOS_ACTIVE = true;
 }

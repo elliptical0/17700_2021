@@ -38,6 +38,7 @@ public class BaseOpMode extends LinearOpMode {
     int wobbleAimIndex = 0;
     Servo wobbleHand;
     int wobbleHandIndex = 0;
+    Servo counterweight;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     int launchIndex = 0;
     OpenCvCamera cam;
@@ -81,15 +82,25 @@ public class BaseOpMode extends LinearOpMode {
         telemetry.update();
     }
 
-    public void powerIntake(boolean on) {
-        if(on) {
+    public void powerIntake(boolean in, boolean fly, boolean mag) {
+        if(in) {
             intake.setPower(1);
             magazine.setPower(-1);
             flywheel.setPower(1);
         } else {
+            //Flywheel Controls
+            if(fly) {
+                flywheel.setPower(-1);
+            } else {
+                flywheel.setPower(0);
+            }
+            //Magazine Controls
+            if(mag) {
+                magazine.setPower(1);
+            } else {
+                magazine.setPower(0);
+            }
             intake.setPower(0);
-            magazine.setPower(0);
-            flywheel.setPower(0);
         }
     }
 
@@ -111,6 +122,7 @@ public class BaseOpMode extends LinearOpMode {
         for(i = 0; i < 2; i++) {
             launchAim[i].setPosition(LAUNCH_AIM_POSITIONS[launchIndex]);
         }
+        counterweight.setPosition(COUNTERWEIGHT_POSITIONS[launchIndex]);
     }
 
     public void resetPosition() {
@@ -151,6 +163,8 @@ public class BaseOpMode extends LinearOpMode {
     }
 
     public void initialize() {
+        clock.startTime();
+
         transform = SharedVariables.transform;
         for (i = 0; i < 4; i++) {
             drive[i] = hardwareMap.get(DcMotor.class, "motor" + i);
@@ -158,6 +172,7 @@ public class BaseOpMode extends LinearOpMode {
         if(SERVOS_ACTIVE) {
             intake = hardwareMap.get(DcMotor.class, "motor6");
             flywheel = hardwareMap.get(DcMotor.class, "motor5");
+            counterweight = hardwareMap.get(Servo.class, "servo6");
             magazine = hardwareMap.get(CRServo.class, "servo5");
             wobbleAim = hardwareMap.get(Servo.class, "servo4");
             wobbleHand = hardwareMap.get(Servo.class, "servo3");

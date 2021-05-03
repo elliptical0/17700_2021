@@ -49,7 +49,7 @@ public class TeleOpMode extends BaseOpMode {
         }
 
         //Intake Controls
-        powerIntake(gamepad1.b);
+        powerIntake(gamepad1.b, gamepad1.right_bumper, gamepad1.a);
 
         //Wobble Controls
         if(gamepad1.right_stick_y < -0.3 && rstickdeb) {
@@ -89,16 +89,6 @@ public class TeleOpMode extends BaseOpMode {
             paddeb = true;
         }
         updateLaunchAim();
-
-        //Flywheel Controls
-        if(gamepad1.right_bumper) {
-            flywheel.setPower(-1);
-        }
-
-        //Magazine Controls
-        if(gamepad1.a) {
-            magazine.setPower(1);
-        }
 
         updateTelemetry();
     }

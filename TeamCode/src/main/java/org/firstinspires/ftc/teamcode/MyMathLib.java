@@ -85,7 +85,7 @@ import static org.firstinspires.ftc.teamcode.Constants.*;
          double r = 0;
          Vector2 dir = t1.pos.subtract(t0.pos);
          if(dir.length() > DEADZONE_POS) {
-             v = dir.rotate(coterminal(t0.head)).divide(12, 12);
+             v = dir.rotate(coterminal(t0.head)).divide(6, 6);
          }
          if(Math.abs(t1.head - coterminal(t0.head)) > DEADZONE_ANGLE) {
              r = absMin(clamp(t1.head - coterminal(t0.head), -1, 1), 0.2);

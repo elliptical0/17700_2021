@@ -39,8 +39,9 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     public void moveState(int i, int nextState) {
         wheelPowers = seekLocation(transform, transforms[i]);
-        if(wheelPowers.equals(D)) {
+        if(Math.abs(wheelPowers[0] + wheelPowers[1] + wheelPowers[2] + wheelPowers[3]) < 0.05) {
             changeState(nextState);
+            telemetry.addData("Change!",0);
         }
     }
 
@@ -71,11 +72,12 @@ public class AutoOpMode_0 extends BaseOpMode {
                 break;
             case 2:
                 visionThread = new VisionThread();
-                visionThread.run();
+                visionThread.start();
                 changeState(3);
             case 3:
                 examineStarterStack();
                 if(currentTime - stateStartTime > 2 || visionThread.stackSize != 0) {
+                    visionThread.interrupt();
                     changeState(4);
                 }
                 break;
@@ -138,6 +140,7 @@ public class AutoOpMode_0 extends BaseOpMode {
         }
         updateMotors();
         telemetry.addData("State:", state);
+        telemetry.addData("Stack Size:", visionThread.stackSize);
         updateTelemetry();
     }
 }
