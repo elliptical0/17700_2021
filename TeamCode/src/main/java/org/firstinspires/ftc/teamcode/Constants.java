@@ -57,12 +57,12 @@ public class Constants {
     /**
      * Shooting transform in inches.
      */
-    public static final Transform SHOOTING_T = new Transform(0, 0, 0);
+    public static final Transform SHOOTING_T = new Transform(84, 60, 0);
 
     /**
      * Starting transform of the robot in inches.
      */
-    public static final Transform[] STARTING_T = {new Transform(9, 9, 0)};
+    public static final Transform[] STARTING_T = {new Transform(9, 15, 0), new Transform(9, 39, 0)};
 
     /**
      *
@@ -72,7 +72,7 @@ public class Constants {
     /**
      *
      */
-    public static final double[] COUNTERWEIGHT_POSITIONS = {0.2, 0.4};
+    public static final double[] COUNTERWEIGHT_POSITIONS = {-0.9, 0.1};
 
     /**
      *
@@ -86,6 +86,8 @@ public class Constants {
      */
     public static final double DEADZONE_POS = 1.5;
     public static final double DEADZONE_ANGLE = Math.toRadians(8);
+
+    public static final double DEADZONE_SERVO = 0.05;
 
     public static final boolean SERVOS_ACTIVE = true;
 }

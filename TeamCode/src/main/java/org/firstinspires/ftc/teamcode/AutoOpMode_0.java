@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import static org.firstinspires.ftc.teamcode.MyMathLib.*;
+import static org.firstinspires.ftc.teamcode.Constants.*;
 
 /**
  * @author TM
@@ -10,6 +11,7 @@ import static org.firstinspires.ftc.teamcode.MyMathLib.*;
 @Autonomous(name="AutoOpMode_0", group="default")
 public class AutoOpMode_0 extends BaseOpMode {
     public int state = 0;
+    public int shotsFired = 0;
 
     public final double[] D = {0, 0, 0, 0};
 
@@ -17,20 +19,18 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     private VisionThread visionThread = new VisionThread();
 
-    double stateStartTime;
-
     public void changeState(int i) {
         state = i;
-        stateStartTime = currentTime;
+        clock.reset();
     }
 
-    public final Transform[] transforms = {new Transform(12, 12, 0),
-            new Transform(72, 12, Math.toRadians(45)),
-            new Transform(97.5, 28, Math.toRadians(0)),
+    public final Transform[] transforms = {new Transform(36, 24, 0),
+            new Transform(36, 24, Math.toRadians(-45)),
+            new Transform(60, 24, 0),
             new Transform(72, 12, Math.toRadians(180)),
-            new Transform(48, 36, Math.toRadians(180)),
-            new Transform(24, 12, Math.toRadians(180)),
-            new Transform(60, 12, Math.toRadians(180))
+            new Transform(96, 36, Math.toRadians(180)),
+            new Transform(120, 12, Math.toRadians(180)),
+            SHOOTING_T
     };
 
     public void moveState(int i) {
@@ -76,7 +76,7 @@ public class AutoOpMode_0 extends BaseOpMode {
                 changeState(3);
             case 3:
                 examineStarterStack();
-                if(currentTime - stateStartTime > 2 || visionThread.stackSize != 0) {
+                if(currentTime > 2 || visionThread.stackSize != 0) {
                     visionThread.interrupt();
                     changeState(4);
                 }
@@ -85,30 +85,17 @@ public class AutoOpMode_0 extends BaseOpMode {
                 moveState(2);
                 break;
             case 5:
-                wobbleAimIndex = 2;
-                wobbleHandIndex = 1;
-                if(currentTime - stateStartTime > 2) {
-                    changeState(6);
+                switch(visionThread.stackSize) {
+                    case 1:
+                        changeState(8);
+                        break;
+                    case 4:
+                        changeState(9);
+                        break;
+                    default:
+                        changeState(7);
+                        break;
                 }
-                break;
-            case 6:
-                wobbleHandIndex = 0;
-                if(currentTime - stateStartTime > 0.25) {
-                    wobbleAimIndex = 1;
-                }
-                if(currentTime - stateStartTime > 1.25) {
-                    switch(visionThread.stackSize) {
-                        case 0:
-                            changeState(7);
-                        case 1:
-                            changeState(8);
-                            break;
-                        case 4:
-                            changeState(9);
-                            break;
-                    }
-                }
-                break;
             case 7:
                 moveState(3, 10);
                 break;
@@ -118,23 +105,41 @@ public class AutoOpMode_0 extends BaseOpMode {
                 moveState(5, 10);
             case 10:
                 wobbleAimIndex = 2;
-                if(currentTime - stateStartTime > 1) {
+                if(servoAtPos(wobbleAim, WOBBLE_AIM_POSITIONS[2])) {
                     changeState(11);
                 }
                 break;
             case 11:
                 wobbleHandIndex = 0;
-                if(currentTime - stateStartTime > 0.25) {
+                if(servoAtPos(wobbleHand, WOBBLE_HAND_POSITIONS[0])) {
                     wobbleAimIndex = 0;
                 }
-                if(currentTime - stateStartTime > 1.25) {
+                if(servoAtPos(wobbleAim, WOBBLE_AIM_POSITIONS[0])) {
                     changeState(12);
                 }
                 break;
             case 12:
-                moveState(6, 99);
+                moveState(6);
+                break;
+            case 13:
+                if(shotsFired < 3) {
+                    powerIntake(false, true, false);
+                    if(currentTime > 1) {
+                        changeState(14);
+                    }
+                } else {
+                    changeState(99);
+                }
+                break;
+            case 14:
+                powerIntake(false, true, true);
+                if(currentTime > 0.5) {
+                    shotsFired++;
+                    changeState(13);
+                }
                 break;
             case 99:
+                SharedVariables.transform = transform;
                 stop();
                 break;
         }

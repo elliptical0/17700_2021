@@ -25,7 +25,7 @@ public class BaseOpMode extends LinearOpMode {
     int i;
     double d;
 
-    ElapsedTime clock = new ElapsedTime();
+    ElapsedTime clock = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
     double currentTime;
     double deltaTime;
 
@@ -58,8 +58,8 @@ public class BaseOpMode extends LinearOpMode {
     }
 
     public void updateTime() {
-        deltaTime = currentTime - clock.seconds();
-        currentTime = clock.seconds();
+        deltaTime = clock.time() > currentTime ? clock.time() - currentTime : clock.time();
+        currentTime = clock.time();
     }
 
     public void updateOdometry() {
@@ -123,6 +123,10 @@ public class BaseOpMode extends LinearOpMode {
             launchAim[i].setPosition(LAUNCH_AIM_POSITIONS[launchIndex]);
         }
         counterweight.setPosition(COUNTERWEIGHT_POSITIONS[launchIndex]);
+    }
+
+    public boolean servoAtPos(Servo servo, double pos) {
+        return Math.abs(servo.getController().getServoPosition(0) - pos) < DEADZONE_SERVO;
     }
 
     public void resetPosition() {
