@@ -72,7 +72,7 @@ public class Constants {
     /**
      *
      */
-    public static final double[] COUNTERWEIGHT_POSITIONS = {-0.9, 0.1};
+    public static final double[] COUNTERWEIGHT_POSITIONS = {1, 0};
 
     /**
      *

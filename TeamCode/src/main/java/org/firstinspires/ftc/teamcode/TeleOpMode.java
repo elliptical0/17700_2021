@@ -49,7 +49,7 @@ public class TeleOpMode extends BaseOpMode {
         }
 
         //Intake Controls
-        powerIntake(gamepad1.b, gamepad1.right_bumper, gamepad1.a);
+        powerIntake(gamepad1.b, gamepad1.x, gamepad1.a);
 
         //Wobble Controls
         if(gamepad1.right_stick_y < -0.3 && rstickdeb) {
