@@ -41,7 +41,11 @@ public class BaseOpMode extends LinearOpMode {
     Servo counterweight;
     Servo[] launchAim = new Servo[2]; //Must be in unison
     int launchIndex = 0;
+
+    ImgFilter filter;
+    ArrayList<MatOfPoint> rings;
     OpenCvCamera cam;
+    int stackSize = 0;
 
 
     double[] wheelPowers;
@@ -136,32 +140,20 @@ public class BaseOpMode extends LinearOpMode {
         transform.set(0, 0, 0);
     }
 
-    class VisionThread extends Thread {
-        int stackSize = 0;
+    public void startVision() {
+        filter = new ImgFilter();
+        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
+        cam.setPipeline(filter);
+    }
 
-        public VisionThread() {
-            this.setName("VisionThread");
-        }
-
-        public void run() {
-            try {
-                ImgFilter filter = new ImgFilter();
-                ArrayList<MatOfPoint> rings;
-                cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
-                cam.setPipeline(filter);
-                while (!isInterrupted()) {
-                    rings = filter.filterContoursOutput();
-                    if(!rings.isEmpty()) {
-                        double ratio = (double) rings.get(0).height() / rings.get(0).width();
-                        if(ratio > 3.1) {
-                            stackSize = 4;
-                        } else if(ratio > 2) {
-                            stackSize = 1;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("(VisionThread) " + e.toString());
+    public void runVision() {
+        rings = filter.filterContoursOutput();
+        if(!rings.isEmpty()) {
+            double ratio = (double) rings.get(0).height() / rings.get(0).width();
+            if(ratio > 3.1) {
+                stackSize = 4;
+            } else if(ratio > 2) {
+                stackSize = 1;
             }
         }
     }

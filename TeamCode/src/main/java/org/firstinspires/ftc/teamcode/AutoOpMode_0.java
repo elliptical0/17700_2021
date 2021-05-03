@@ -17,7 +17,7 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     public final int STARTING_T_I = 0;
 
-    private VisionThread visionThread = new VisionThread();
+    private boolean b;
 
     public void changeState(int i) {
         state = i;
@@ -39,19 +39,15 @@ public class AutoOpMode_0 extends BaseOpMode {
 
     public void moveState(int i, int nextState) {
         wheelPowers = seekLocation(transform, transforms[i]);
-        if(Math.abs(wheelPowers[0] + wheelPowers[1] + wheelPowers[2] + wheelPowers[3]) < 0.05) {
+        b = true;
+        for(double p : wheelPowers) {
+            if(Math.abs(p) > 0.05) {
+                b = false;
+            }
+        }
+        if(b) {
             changeState(nextState);
-            telemetry.addData("Change!",0);
         }
-    }
-
-    public void examineStarterStack() {
-        if(visionThread.stackSize == 4) {
-            visionThread.interrupt();
-        } else if(visionThread.stackSize == 1) {
-            visionThread.interrupt();
-        }
-        changeState(state + 1);
     }
 
     @Override
@@ -71,13 +67,11 @@ public class AutoOpMode_0 extends BaseOpMode {
                 moveState(1);
                 break;
             case 2:
-                visionThread = new VisionThread();
-                visionThread.start();
+                startVision();
                 changeState(3);
             case 3:
-                examineStarterStack();
-                if(currentTime > 2 || visionThread.stackSize != 0) {
-                    visionThread.interrupt();
+                runVision();
+                if(currentTime > 2 || stackSize != 0) {
                     changeState(4);
                 }
                 break;
@@ -85,7 +79,7 @@ public class AutoOpMode_0 extends BaseOpMode {
                 moveState(2);
                 break;
             case 5:
-                switch(visionThread.stackSize) {
+                switch(stackSize) {
                     case 1:
                         changeState(8);
                         break;
@@ -145,7 +139,7 @@ public class AutoOpMode_0 extends BaseOpMode {
         }
         updateMotors();
         telemetry.addData("State:", state);
-        telemetry.addData("Stack Size:", visionThread.stackSize);
+        telemetry.addData("Stack Size:", stackSize);
         updateTelemetry();
     }
 }
